@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="24_1_C"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/tmp/tmp.ufqgrufk4s/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="24_1_C">
+				<Option output="/tmp/tmp.ufqgrufk4s/cmake-build-debug/24_1_C" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.ufqgrufk4s/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 24_1_C"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="24_1_C/fast">
+				<Option output="/tmp/tmp.ufqgrufk4s/cmake-build-debug/24_1_C" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.ufqgrufk4s/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 24_1_C/fast"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/tmp/tmp.ufqgrufk4s/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/tmp/tmp.ufqgrufk4s/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/tmp/tmp.ufqgrufk4s/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/tmp/tmp.ufqgrufk4s/linkedlist_split.c">
+			<Option target="24_1_C"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.ufqgrufk4s/main.c.txt">
+			<Option target="24_1_C"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.ufqgrufk4s/maze.c.txt">
+			<Option target="24_1_C"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.ufqgrufk4s/stack_calc.c.txt">
+			<Option target="24_1_C"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.ufqgrufk4s/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

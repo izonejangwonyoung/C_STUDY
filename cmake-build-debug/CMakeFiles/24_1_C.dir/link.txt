@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/24_1_C.dir/linkedlist_split.c.o -o 24_1_C

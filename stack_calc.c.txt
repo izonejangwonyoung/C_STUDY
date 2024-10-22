@@ -1,0 +1,280 @@
+//⓵ 스택은 링크드 리스트를 사용하여 구현
+//- pop, push, peek, isEmpty, isFull 기본함수 구현
+//- 자기참조 구조체 사용 ⓶ 기본적인 사칙 연산수행
+//- +, -, /, * 기본적인 사칙 연산이 수행 가능해야 함 ⓷ ‘(’, ‘)’ 괄호를 통한 우선순위 연산
+//- 괄호안에 있는 식이 먼저 계산되야 함 ⓸ 올바른 식인지 검사
+//- 괄호의 짝이 올바른지 검사
+//예) (10.1 * 20) + 4.0) --> (X)
+//- 식이 올바른지 검사
+//        예) a + 10.1 * 20 --> (X) 문자열 포함 예) + 10.1 * 20 --> (X) 부호 포함
+//⓹ 중위식을 후위식으로 변환하는 함수 구현 - 입력: 중위식 문자열
+//- 출력: 성공 – 후위식 문자열
+//실패 – 오류코드 리턴
+//⓺ 중위식을 전위식으로 변환하는 함수 구현
+//- 입력: 중위식 문자열
+//- 출력: 성공 – 전위식 문자열
+//실패 – 오류코드 리턴
+//⓻ 변환된 후위식을 계산하는 함수 구현
+//- 입력: 후위식 문자열
+//- 출력: 성공 – 계산결과
+//        실패 – 오류코드 리턴 ⓼ 소수점 처리
+//- 예) (중위식) 3.14 + 4 => (후위식) 3.14 4 +
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+typedef double element;
+typedef struct StackNode {
+    element data;
+    struct StackNode *link;
+} StackNode;
+
+typedef struct {
+    StackNode *top;
+} LinkedStackType;
+
+void init(LinkedStackType *s) //스택 초기화
+{
+    s->top = NULL;
+}
+
+int is_empty(LinkedStackType *s) {
+    return (s->top == NULL);
+}
+
+int is_full(LinkedStackType *s) {
+    return 0;
+}
+
+
+void push(LinkedStackType *s, element item) {
+    StackNode *temp = (StackNode *) malloc(sizeof(StackNode));
+    temp->data = item;
+    temp->link = s->top;
+    s->top = temp;
+}
+
+void print_stack(LinkedStackType *s) {
+    for (StackNode *p = s->top; p != NULL; p = p->link)
+        printf("%f->", p->data);
+    printf("NULL \n");
+}
+
+element pop(LinkedStackType *s) {
+    if (is_empty(s)) {
+        fprintf(stderr, "Stack is empty\n");
+        exit(1);
+    } else {
+        StackNode *temp = s->top;
+        double data = temp->data;
+        s->top = s->top->link;
+        free(temp);
+        return data;
+    }
+}
+
+int check_bracket(char exp[]) {
+    LinkedStackType s;
+    init(&s);
+    for (int i = 0; exp[i]; i++) {
+        if (exp[i] == '(') {
+            push(&s, exp[i]);
+        } else if (exp[i] == ')') {
+            if (is_empty(&s))
+                return 0;
+            pop(&s);
+        }
+    }
+    return is_empty(&s);
+}
+
+int is_valid_exp(char exp[]) {
+    //검사 내용: 첫 번째 문자가 숫자나 여는 괄호가 맞는지?, 공백이나 숫자, 부호를 제외하고 다른 문자가 존재하는지?
+    int i = 0;
+    int has_digit = 0;
+    int has_dot = 0;
+
+    // 공백 문자 건너뛰기
+    while (exp[i] == ' ')
+        i++;
+
+    // 첫 번째 문자가 숫자 또는 여는 괄호인지 확인
+    if (!isdigit(exp[i]) && exp[i]!='(')
+        return 0;
+
+    for (int i = 0; exp[i]; i++) {
+        // 숫자인 경우
+        if (isdigit(exp[i])) {
+            has_digit = 1;
+            continue;
+        }
+        // 소수점인 경우
+        if (exp[i] == '.') {
+            if (has_dot)
+                //같은 숫자에 소숫점이 여러 개 있는 경우 ex) 1..3  같은 케이스들.
+                return 0;
+            has_dot = 1;
+            continue;
+        }
+        // 연산자 또는 괄호인 경우
+        if (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/' ||
+            exp[i] == '(' || exp[i] == ')') {
+            has_dot = 0; //연산자나 괄호가 나왔다는 말은 숫자가 끝났다는 말이므로 소숫점 상태를 초기화해서 또 다른 소숫점 검사를 할 수 있도록 해준다.
+            continue;
+        }
+        // 공백인 경우
+        if (exp[i] == ' ')
+            continue;
+        return 0;
+    }
+
+    return has_digit;
+}
+
+element peek(LinkedStackType *s) {
+    if (is_empty(s)) {
+        fprintf(stderr, "스택이 비었습니다.\n");
+        exit(1);
+    } else {
+        return s->top->data;
+    }
+}
+
+int priority(char op) //연산자 우선순위 고려
+{
+    switch (op) {
+        case '(':
+        case ')':
+            return 0;
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+    }
+    return -1;
+}
+
+
+//중위식을 후위식으로 변환하는 함수
+//피연산자는 그대로 출력하고, 연산자는 스택 empty 시 추가
+//top의 연산자가 본인보다 우선 순위 낮을 때까지 pop,그 후 담기
+//괄호의 경우, 닫는 괄호 아니면 pop X
+//닫는 괄호 나오면? - > 여는 괄호 나올 때까지 pop
+void infix_to_postfix(char exp[], char postfix[]) {
+    LinkedStackType s;
+    init(&s);
+    int j = 0;
+    for (int i = 0; exp[i]; i++) {  //끝까지 반복
+        if (isdigit(exp[i])) {  //돌다가 숫자를 발견하면
+            printf("%c", exp[i]);
+            while (isdigit(exp[i]) || exp[i] == '.') {  //숫자나 소숫점 안 나올때까지  출력식에 담기
+                postfix[j++] = exp[i++];
+            }
+            postfix[j++] = ' ';  //공백으로 출력식 구분 쉽도록 함
+            i--; //while문이 종료되었다는 것 = 소숫점이나 숫자가 아닌 것을 가리키고 있다는 뜻이다.
+            // 따라서 i를 하나 줄여서 다음 반복에서는 방금까지 가리키던 것을 검사하는 것부터 시작하도록 해줘야 한다.
+        } else {
+            switch (exp[i]) {
+                case '(':
+                    push(&s, exp[i]); //여는 괄호는 일단 넣는다
+                    break;
+                case ')':
+                    while (peek(&s) != '(')  //닫힌 괄호인데 스택을 peek해보니 열린 괄호가 나왔다면?
+                        postfix[j++] = pop(&s);  //여는 괄호 나올 때까지 pop해서 출력식에 추가
+                    pop(&s);  /// 여는 괄호 나오면 pop
+                    break;
+                default:  //그냥 연산자면?
+                    while (!is_empty(&s) && priority(exp[i]) <= priority(peek(&s)))
+                        //비어있지도 않고, 우선순위 비교 시에 top의 연산자보다 우선순위가 같거나 작으면
+                        postfix[j++] = pop(&s); //연산자를 꺼내서 출력식에 추가
+                    push(&s, exp[i]);  //현재 연산자 추가
+                    break;
+            }
+        }
+    }
+    while (!is_empty(&s))  //다 돌았는데 스택에 연산자가 남아있으면
+        postfix[j++] = pop(&s);  // 다 꺼내서 출력식에 넣음
+}
+
+
+
+//1) 피연산자가 들어오면 스택에 담기
+//2) 연산자를 만나면 스택에서 두 개의 연산자를 꺼내서 연산한 뒤에 그 결과를 스택에 담기
+//3) 연산을 마친 뒤에 스택에 남아있는 하나의 피연산자가 연산 수행 결과
+element calc_postfix(char exp[]) {
+    LinkedStackType s;
+    init(&s);
+    element op1, op2;
+    for (int i = 0; exp[i]; i++) {
+        // 피연산자인 경우 스택에 담기
+        if (isdigit(exp[i])) {
+            double num = 0;
+            double decimal = 10;
+
+            // 정수 부분 파싱
+            while (isdigit(exp[i])) {
+                num = num * 10 + (exp[i] - '0');
+                i++;
+            }
+            // 소수점 확인
+            if (exp[i] == '.') {
+                i++;
+                // 소수 부분 파싱
+                while (isdigit(exp[i])) {
+                    num += (exp[i] - '0') / decimal;
+                    decimal *= 10;
+                    i++;
+                }
+            }
+            push(&s, num);
+            i--;  //while문이 종료되었다는 것 = 소숫점이나 숫자가 아닌 것을 가리키고 있다는 뜻이다.
+            // 따라서 i를 하나 줄여서 다음 반복에서는 방금까지 가리키던 것을 검사하는 것부터 시작하도록 해줘야 한다.
+        }
+            // 연산자인 경우 스택에서 두 개의 피연산자를 꺼내서 연산 후 결과를 스택에 담기
+        else if (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') {
+            op2 = pop(&s);
+            op1 = pop(&s);
+
+            switch (exp[i]) {
+                case '+':
+                    push(&s, op1 + op2);
+                    break;
+                case '-':
+                    push(&s, op1 - op2);
+                    break;
+                case '*':
+                    push(&s, op1 * op2);
+                    break;
+                case '/':
+                    if (op2 == 0) {
+                        fprintf(stderr, "0으로 나누려고 시도하고 있습니다.\n");  ///0으로 나누려 할 때 오류 출력
+                        exit(1);
+                    }
+                    push(&s, op1 / op2);
+                    break;
+            }
+        }
+    }
+
+    return pop(&s);
+}
+
+int main(void) {
+    char exp[999];
+    char postfix[999];
+    printf("중위식 입력: ");
+    scanf("%s", exp);
+    if (check_bracket(exp) && is_valid_exp(exp) == 1) {  //괄호 검사와 식 유효성 검사 모두 통과했다면 시행
+        infix_to_postfix(exp, postfix);
+        printf("후위식 : %s\n", postfix);
+        printf("Result: %f\n", calc_postfix(postfix));
+    } else {
+        printf("유효성 검사에서 오류가 발생하였습니다.\n");
+    }//
+
+    return 0;
+}
